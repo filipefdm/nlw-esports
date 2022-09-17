@@ -9,7 +9,7 @@ import "./styles/main.css";
 
 import logoImg from "./assets/logo-nlw-esports.svg";
 
-import axios from "axios";
+import { api } from "./lib/api";
 
 interface Game {
   id: string;
@@ -24,7 +24,7 @@ function App() {
   const [games, setGames] = useState<Game[]>([]);
 
   useEffect(() => {
-    axios("http://localhost:3333/games").then((response) => {
+    api.get("/games").then((response) => {
       setGames(response.data);
     });
   }, []);

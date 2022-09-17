@@ -5,7 +5,7 @@ import { useState, useEffect, FormEvent } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as Checkbox from "@radix-ui/react-checkbox";
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
-import axios from "axios";
+import { api } from "../lib/api";
 
 interface Game {
   id: string;
@@ -18,7 +18,7 @@ export function CreateAdModal() {
   const [useVoiceChannel, setUseVoiceChannel] = useState(false);
 
   useEffect(() => {
-    axios("http://localhost:3333/games").then((response) => {
+    api.get("http://localhost:3333/games").then((response) => {
       setGames(response.data);
     });
   }, []);
@@ -35,7 +35,7 @@ export function CreateAdModal() {
     }
 
     try {
-      await axios.post(`http://localhost:3333/games/${data.game}/ads`, {
+      await api.post(`http://localhost:3333/games/${data.game}/ads`, {
         name: data.name,
         yearsPlaying: Number(data.yearsPlaying),
         discord: data.discord,
