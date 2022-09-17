@@ -8,7 +8,11 @@ import { convertMinutesToHourString } from "./utils/convert-minutes-to-hour-stri
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://nlw-esports-production-71dd.up.railway.app",
+  })
+);
 
 const prisma = new PrismaClient({
   log: ["query"],
