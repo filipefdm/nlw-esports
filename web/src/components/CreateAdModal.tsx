@@ -18,7 +18,7 @@ export function CreateAdModal() {
   const [useVoiceChannel, setUseVoiceChannel] = useState(false);
 
   useEffect(() => {
-    api.get("http://localhost:3333/games").then((response) => {
+    api.get("games").then((response) => {
       setGames(response.data);
     });
   }, []);
@@ -35,7 +35,7 @@ export function CreateAdModal() {
     }
 
     try {
-      await api.post(`http://localhost:3333/games/${data.game}/ads`, {
+      await api.post(`games/${data.game}/ads`, {
         name: data.name,
         yearsPlaying: Number(data.yearsPlaying),
         discord: data.discord,
