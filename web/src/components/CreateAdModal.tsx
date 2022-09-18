@@ -5,7 +5,7 @@ import { useState, useEffect, FormEvent } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as Checkbox from "@radix-ui/react-checkbox";
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
-import { api } from "../lib/api";
+import axios from "axios";
 
 interface Game {
   id: string;
@@ -18,9 +18,11 @@ export function CreateAdModal() {
   const [useVoiceChannel, setUseVoiceChannel] = useState(false);
 
   useEffect(() => {
-    api.get("games").then((response) => {
-      setGames(response.data);
-    });
+    axios("https://nlw-esports-production-71dd.up.railway.app/games").then(
+      (response) => {
+        setGames(response.data);
+      }
+    );
   }, []);
 
   async function handleCreateAd(event: FormEvent) {
@@ -35,15 +37,18 @@ export function CreateAdModal() {
     }
 
     try {
-      await api.post(`games/${data.game}/ads`, {
-        name: data.name,
-        yearsPlaying: Number(data.yearsPlaying),
-        discord: data.discord,
-        weekDays: weekDays.map(Number),
-        hourStart: data.hourStart,
-        hourEnd: data.hourEnd,
-        useVoiceChannel: useVoiceChannel,
-      });
+      await axios.post(
+        `https://nlw-esports-production-71dd.up.railway.app/games/${data.game}/ads`,
+        {
+          name: data.name,
+          yearsPlaying: Number(data.yearsPlaying),
+          discord: data.discord,
+          weekDays: weekDays.map(Number),
+          hourStart: data.hourStart,
+          hourEnd: data.hourEnd,
+          useVoiceChannel: useVoiceChannel,
+        }
+      );
 
       alert("Anúncio criado com sucesso!");
     } catch (err) {

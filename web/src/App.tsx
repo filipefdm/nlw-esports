@@ -9,7 +9,7 @@ import "./styles/main.css";
 
 import logoImg from "./assets/logo-nlw-esports.svg";
 
-import { api } from "./lib/api";
+import axios from "axios";
 
 interface Game {
   id: string;
@@ -24,9 +24,11 @@ function App() {
   const [games, setGames] = useState<Game[]>([]);
 
   useEffect(() => {
-    api.get("/games").then((response) => {
-      setGames(response.data);
-    });
+    axios
+      .get("https://nlw-esports-production-71dd.up.railway.app/games")
+      .then((response) => {
+        setGames(response.data);
+      });
   }, []);
 
   return (
